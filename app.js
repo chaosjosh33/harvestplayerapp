@@ -1,13 +1,5 @@
-import {
-    Rx
-} from 'rxjs';
-import {
-    map,
-    filter,
-    switchMap
-} from 'rxjs/operators';
+require('./src/rsjx-setup')
 
-let button = document.querySelector('button')
+require('./src/firebase-setup')
 
-Rx.Observable.fromEvent(button, 'click')
-    .subscribe(() => document.getElementById('app').innerHTML('clicked'))
+require('./src/player')

@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, Menu} = require('electron')
-
+const defaultStream = "https://harvestvod-f.akamaihd.net/i/services/2018/201806281900-,1080,0720,0480,0360,0240,.mp4.csmil/master.m3u8"
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow

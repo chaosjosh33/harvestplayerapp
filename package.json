@@ -7,7 +7,10 @@
     "build": "babel . -d lib",
     "start": "electron ."
   },
-  "repository": "https://harvestonline.beanstalkapp.com/harvest",
+  "repository": {
+    "type": "git",
+    "url": "https://harvestonline.beanstalkapp.com/harvest"
+  },
   "keywords": [
     "Electron",
     "ha_app"
@@ -17,8 +20,11 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-react-app": "^3.1.2",
     "babel-register": "^6.26.0",
     "electron-prebuilt-compile": "^2.0.4",
+    "jshint": "^2.9.5",
+    "node-gyp": "^3.7.0",
     "rxjs": "^6.2.1"
   }
 }
