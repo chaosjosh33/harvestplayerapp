@@ -1,0 +1,24 @@
+{
+  "name": "ha-electron-app",
+  "version": "1.0.0",
+  "description": "Ha app built in selenium",
+  "main": "main.js",
+  "scripts": {
+    "build": "babel . -d lib",
+    "start": "electron ."
+  },
+  "repository": "https://harvestonline.beanstalkapp.com/harvest",
+  "keywords": [
+    "Electron",
+    "ha_app"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "electron-prebuilt-compile": "^2.0.4",
+    "rxjs": "^6.2.1"
+  }
+}
