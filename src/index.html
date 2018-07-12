@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>
+  Harvest Video Player</title>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
+<script src="https://content.jwplatform.com/libraries/U7kzhyAF.js"></script>
+</head>
+<body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0" >
+  <div id="App"></div>
+</body>
+<!--<script>require('./player.js')</script>-->
+<script type="text/jsx">
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {AppContainer} from 'react-hot-loader';
+
+const render = () => {
+  const App = require('./app').default;
+  ReactDOM.render(<AppContainer><App /></AppContainer>, document.getElementById('App'));
+}
+
+render();
+if (module.hot) {
+  module.hot.accept(render);
+}
+</script>
+</html>

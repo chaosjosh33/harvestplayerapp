@@ -1,0 +1,22 @@
+{
+  "extends": "eslint-config-airbnb",
+  "rules": {
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": [2, { "ignore": ["electron"] }],
+    "linebreak-style": 0,
+    "react/prefer-stateless-function": 0,
+    "comma-dangle": "off", 
+    "comma-spacing": "off",
+    "no-undef": "off",
+    "indent": "off",
+    "quotes": "off",
+    "no-console": "off",
+    "prefer-template": "off",
+    "react/jsx-indent": "off",
+    "react/jsx-indent-props": "off",
+    "react/jsx-boolean-value": "off",
+    "keyword-spacing": "off",
+    "semi": "off"
+  }
+}
