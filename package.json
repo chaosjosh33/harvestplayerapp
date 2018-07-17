@@ -1,7 +1,7 @@
 {
   "name": "ha-electron-app",
   "version": "1.0.0",
-  "description": "Ha app built in selenium",
+  "description": "Ha app built in electron",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -53,9 +53,11 @@
     }
   },
   "dependencies": {
+    "aphrodite": "^2.2.2",
     "electron-compile": "^6.4.3",
     "electron-devtools-installer": "^2.2.4",
     "electron-squirrel-startup": "^1.0.0",
+    "glamor": "^2.20.40",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-hot-loader": "^3.1.3",

@@ -5,6 +5,7 @@ import config from './config'
 export default class Player extends React.Component {
     componentDidMount() {
         firebase.initializeApp(config.config)
+        jwplayer().setControls(false)
 
         const streamUrlLoc = firebase.database().ref('/harvest_player_app/streamUrl')
 

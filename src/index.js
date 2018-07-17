@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { screen, app, BrowserWindow, globalShortcut } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 
@@ -11,14 +11,19 @@ const isDevMode = process.execPath.match(/[\\/]electron/);
 if (isDevMode) enableLiveReload({ strategy: 'react-hmr' });
 
 const createWindow = async () => {
+  const displays = screen.getAllDisplays();
+  const externalDisplay = displays.find(display => display.bounds.x !== 0 || display.bounds.y !== 0)
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    frame: false
+    frame: false,
+    fullscreen: true,
+    alwaysOnTop: true,
+    x: externalDisplay ? externalDisplay.bounds.x : 800,
+    y: externalDisplay ? externalDisplay.bounds.y : 500
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-  mainWindow.setFullScreen(true)
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
   // Open the DevTools.
   if (isDevMode) {
     await installExtension(REACT_DEVELOPER_TOOLS);
@@ -32,13 +37,13 @@ const createWindow = async () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+  globalShortcut.register('Esc', () => app.quit())
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar

@@ -17,6 +17,7 @@
     "react/jsx-indent-props": "off",
     "react/jsx-boolean-value": "off",
     "keyword-spacing": "off",
-    "semi": "off"
+    "semi": "off",
+    "react/prop-types": "off"
   }
 }
