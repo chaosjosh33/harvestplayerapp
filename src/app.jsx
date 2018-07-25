@@ -1,9 +1,11 @@
 import React from 'react';
+import { remote } from 'electron'
 import { StyleSheet, css } from './aphroditeExtension'
 import Player from './player'
 import InfoPanel from './eventsInfoPanel'
 import DebugPanel from './debugPanel'
 import config from './config'
+import VideoPlayer from './videojs';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -12,6 +14,8 @@ export default class App extends React.Component {
       cursor: 'default',
       message: 'block',
       debugVisibility: 'none',
+      display: remote.screen.getAllDisplays()
+        .find(display => display.bounds.x !== 0 || display.bounds.y !== 0),
       bitrate: 0,
       stream: 'default',
       meta: '',
@@ -74,7 +78,8 @@ export default class App extends React.Component {
           debugVisibility={this.state.debugVisibility}
         />
         <div id="message" className={css(styles.messageBox)} />
-        <Player
+        <VideoPlayer
+          display={this.state.display}
           showMessage={this.showMessage}
           handleChange={this.handleChange}
           pushStream={this.pushStream}

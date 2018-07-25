@@ -41,6 +41,7 @@ export default class InfoPanel extends React.Component {
                         win[0].setContentBounds(
                             displays[Number(event.key) - 1].bounds
                         )
+                        this.handleChange('display', displays[Number(event.key) - 1])
                     } catch (err) {
                         console.error('monitor ' + event.key + ' doesn\'t exist. ' + err)
                     }
