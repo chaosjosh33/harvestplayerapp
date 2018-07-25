@@ -36,12 +36,8 @@ export default class Player extends React.Component {
         jwplayer().setControls(false)
         jwplayer().on('buffer', r => this.props.showMessage(r.newstate))
         jwplayer().on('play', r => this.props.showMessage(r.viewable ? 'playing' : 'error'))
-        jwplayer().on('time', () => {
-            this.props.handleChange('bitrate', jwplayer().getVisualQuality().level.bitrate)
-        })
-        jwplayer().on('bufferChange', (o) => {
-            this.props.handleChange('meta', JSON.stringify(o.meta))
-        })
+        jwplayer().on('time', () => this.props.handleChange('bitrate', jwplayer().getVisualQuality().level.bitrate))
+        jwplayer().on('bufferChange', o => this.props.handleChange('meta', JSON.stringify(o)))
     }
 
     shouldComponentUpdate() {
