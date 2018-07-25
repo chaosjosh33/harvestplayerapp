@@ -5,23 +5,54 @@ import config from './config'
 export default class Player extends React.Component {
     componentDidMount() {
         firebase.initializeApp(config.config)
-        jwplayer().setControls(false)
 
-        const streamUrlLoc = firebase.database().ref('/harvest_player_app/streamUrl')
+        const defaultLoc = firebase.database().ref('/harvest_player_app/streamUrl/default')
+        const backupLoc = firebase.database().ref('/harvest_player_app/streamUrl/backup')
 
-        firebase.database().ref('/harvest_player_app/streamUrl/default')
+        defaultLoc.child('/0')
             .once('value')
-            .then(snapshot => jwplayer().load(
-                [{
-                    file: snapshot.val() || config.defaultStream
-                }]
-            ))
+            .then((snapshot) => {
+                const defaultStream = {
+                    file: snapshot.val() || config.defaultStream.file,
+                    title: "default"
+                }
+                jwplayer().load([defaultStream])
+                this.props.pushStream(defaultStream)
+            })
+        backupLoc.child('/0')
+            .once('value')
+            .then(snapshot => this.props.pushStream({
+                file: snapshot.val() || config.backupStream.file,
+                    title: "backup"
+                }))
+        defaultLoc.on('child_added', (data) => {
+            const stream = {
+                file: data.val() || config.defaultStream.file,
+                title: "default"
+            }
+            this.props.pushStream(stream)
+        })
+        backupLoc.on('child_added', (data) => {
+            const stream = {
+                file: data.val() || config.backupStream.file,
+                title: "backup"
+            }
+            this.props.pushStream(stream)
+        })
 
-        streamUrlLoc.on('child_added', data => jwplayer().load(
-            [{
-                file: data.val() || config.defaultStream
-            }]
-        ))
+        jwplayer().setControls(false)
+        jwplayer().on('buffer', r => this.props.showMessage(r.newstate))
+        jwplayer().on('play', r => this.props.showMessage(r.viewable ? 'playing' : 'error'))
+        jwplayer().on('time', () => {
+            this.props.handleChange('bitrate', jwplayer().getVisualQuality().level.bitrate)
+        })
+        jwplayer().on('bufferChange', (o) => {
+            this.props.handleChange('meta', JSON.stringify(o.meta))
+        })
+    }
+
+    shouldComponentUpdate() {
+        return false
     }
 
     render() {
@@ -43,9 +74,7 @@ export default class Player extends React.Component {
                 railcolor: "#F58025"
             },
             playlist: [{
-                sources: [{
-                    file: config.defaultStream
-                }]
+                sources: [config.defaultStream]
             }]
         }
 

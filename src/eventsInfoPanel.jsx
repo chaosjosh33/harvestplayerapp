@@ -1,4 +1,4 @@
-import { fromEvent } from 'rxjs'
+import { fromEvent, of } from 'rxjs'
 import { remote } from 'electron'
 import _ from 'lodash'
 import React from 'react'
@@ -14,30 +14,36 @@ export default class InfoPanel extends React.Component {
         this.state = { dialogVisibility: 'block' }
     }
     componentDidMount() {
-        const userInput = fromEvent(document, 'keyup')
+        const userInput = fromEvent(document, 'keydown')
 
+        of(this.props.streams).subscribe((value) => {
+            if(value.title === this.props.stream) jwplayer().load([value])
+        })
+        of(this.props.stream).subscribe(value => jwplayer().load([this.props.streams[value][0]]))
         userInput.subscribe(
             (event) => {
-                if (event.keyCode === 191) this.setVisibility('dialogVisibility',this.state.dialogVisibility === 'none' ? 'block' : 'none')
-                if (event.key === 'r') jwplayer().setPosition(0)
+                if (event.keyCode === 191) this.setVisibility('dialogVisibility', this.state.dialogVisibility === 'none' ? 'block' : 'none')
+                if (event.code === 'Space') jwplayer().getState() !== 'playing' ? jwplayer().play() : jwplayer().pause()
+                if (event.key === 'r') jwplayer().load(jwplayer().getPlaylist())
                 if (event.key === 'c') jwplayer().setControls(!jwplayer().getControls())
-                if (event.key === 'm') this.props.change('cursor', this.props.cursor === 'none!important' ? 'default!important' : 'none!important')
-                if (event.key === 'l') console.log('live')
-                if (event.key === 's') console.log('start')
-                if (event.key === 'd') console.log('debug stats')
-                if (event.key === 'a') console.log('autobitrate')
-                if (event.key === 'b') console.log('backup stream')
+                if (event.key === 'm') {
+                    document.getElementsByClassName('jw-media')[0].style.cursor = "inherit"
+                    document.body.style.cursor !== 'none' ? document.body.style.cursor = 'none' : document.body.style.cursor = 'default'
+                }
+                if (event.key === 'l') {
+                    jwplayer().seek(-jwplayer().getDuration())
+                    console.log(-jwplayer().getDuration())
+                }
+                if (event.key === 's') jwplayer().seek(0)
+                if (event.key === 'd') this.props.handleChange('debugVisibility', this.props.debugVisibility === 'none' ? 'block' : 'none')
+                if (event.key === 'b') this.props.handleChange('stream', this.props.stream === 'default' ? 'backup' : 'default')
                 if (_.range(49, 57, 1).includes(event.keyCode)) {
-                    if (event.shiftKey === true) {
-                        console.log('lock bitrate at ' + event.code)
-                    } else if (displays[Number(event.key) - 1]) {
-                        try {
-                            win[0].setContentBounds(
-                                displays[Number(event.key) - 1].bounds
-                            )
-                        } catch (err) {
-                            console.error('monitor ' + event.key + ' doesn\'t exist. ' + err)
-                        }
+                    try {
+                        win[0].setContentBounds(
+                            displays[Number(event.key) - 1].bounds
+                        )
+                    } catch (err) {
+                        console.error('monitor ' + event.key + ' doesn\'t exist. ' + err)
                     }
                 }
             }
@@ -85,8 +91,6 @@ export default class InfoPanel extends React.Component {
                         <li>L: Seek to current/live video</li>
                         <li>S: Seek to start of stream</li>
                         <li>D: Toggle application debugging/video statistics</li>
-                        <li>Shift + 1-3: Lock to specific bitrate (not recommended).</li>
-                        <li>A: Automatic bitrate selection (defualt, recommended)</li>
                         <li>B: Switch between primary and backup feed</li>
                     </ul>
                 </div>
