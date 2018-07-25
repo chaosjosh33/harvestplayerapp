@@ -6,38 +6,31 @@ export default class Player extends React.Component {
     componentDidMount() {
         firebase.initializeApp(config.config)
 
-        const defaultLoc = firebase.database().ref('/harvest_player_app/streamUrl/default')
-        const backupLoc = firebase.database().ref('/harvest_player_app/streamUrl/backup')
+        const defaultLoc = firebase.database().ref('/harvest_player_app/streamUrl')
 
-        defaultLoc.child('/0')
-            .once('value')
+        defaultLoc.once('value')
             .then((snapshot) => {
                 const defaultStream = {
-                    file: snapshot.val() || config.defaultStream.file,
-                    title: "default"
+                    file: snapshot.val()[0].file || config.defaultStream.file,
+                    title: snapshot.val()[0].title || config.defaultStream.title
+                }
+                const backupStream = {
+                    file: snapshot.val()[1].file || config.defaultStream.file,
+                    title: snapshot.val()[1].title || config.defaultStream.title
                 }
                 jwplayer().load([defaultStream])
                 this.props.pushStream(defaultStream)
+                this.props.pushStream(backupStream)
             })
-        backupLoc.child('/0')
-            .once('value')
-            .then(snapshot => this.props.pushStream({
-                file: snapshot.val() || config.backupStream.file,
-                    title: "backup"
-                }))
         defaultLoc.on('child_added', (data) => {
-            const stream = {
-                file: data.val() || config.defaultStream.file,
-                title: "default"
+            if(data.key > 1) {
+                const stream = {
+                    file: data.val().file,
+                    title: data.val().title
+                }
+                this.props.pushStream(stream)
+                if (stream.title === this.props.stream) jwplayer().load(stream)
             }
-            this.props.pushStream(stream)
-        })
-        backupLoc.on('child_added', (data) => {
-            const stream = {
-                file: data.val() || config.backupStream.file,
-                title: "backup"
-            }
-            this.props.pushStream(stream)
         })
 
         jwplayer().setControls(false)

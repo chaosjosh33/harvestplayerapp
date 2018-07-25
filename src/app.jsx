@@ -62,10 +62,10 @@ export default class App extends React.Component {
     return (
       <div id="wrapper">
         <InfoPanel
-        debugVisibility={this.state.debugVisibility}
-        handleChange={this.handleChange}
-        stream={this.stream}
-        streams={this.streams}
+          debugVisibility={this.state.debugVisibility}
+          handleChange={this.handleChange}
+          stream={this.state.stream}
+          streams={this.state.streams}
         />
         <DebugPanel
           bitrate={this.state.bitrate}
@@ -75,9 +75,10 @@ export default class App extends React.Component {
         />
         <div id="message" className={css(styles.messageBox)} />
         <Player
-        showMessage={this.showMessage}
-        handleChange={this.handleChange}
-        pushStream={this.pushStream}
+          showMessage={this.showMessage}
+          handleChange={this.handleChange}
+          pushStream={this.pushStream}
+          stream={this.state.stream}
         />
       </div>
     )

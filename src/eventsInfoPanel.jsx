@@ -1,4 +1,4 @@
-import { fromEvent, of } from 'rxjs'
+import { fromEvent } from 'rxjs'
 import { remote } from 'electron'
 import _ from 'lodash'
 import React from 'react'
@@ -16,10 +16,6 @@ export default class InfoPanel extends React.Component {
     componentDidMount() {
         const userInput = fromEvent(document, 'keydown')
 
-        of(this.props.streams).subscribe((value) => {
-            if(value.title === this.props.stream) jwplayer().load([value])
-        })
-        of(this.props.stream).subscribe(value => jwplayer().load([this.props.streams[value][0]]))
         userInput.subscribe(
             (event) => {
                 if (event.keyCode === 191) this.setVisibility('dialogVisibility', this.state.dialogVisibility === 'none' ? 'block' : 'none')
@@ -36,7 +32,10 @@ export default class InfoPanel extends React.Component {
                 }
                 if (event.key === 's') jwplayer().seek(0)
                 if (event.key === 'd') this.props.handleChange('debugVisibility', this.props.debugVisibility === 'none' ? 'block' : 'none')
-                if (event.key === 'b') this.props.handleChange('stream', this.props.stream === 'default' ? 'backup' : 'default')
+                if (event.key === 'b') {
+                    this.props.handleChange('stream', this.props.stream !== 'default' ? 'default' : 'backup')
+                    jwplayer().load([this.props.streams[this.props.stream][0]])
+                }
                 if (_.range(49, 57, 1).includes(event.keyCode)) {
                     try {
                         win[0].setContentBounds(
