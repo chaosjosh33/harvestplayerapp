@@ -64,6 +64,7 @@
     "rxjs": "^6.2.1",
     "rxjs-react-component": "^0.2.5",
     "video.js": "^7.0.5",
+    "videojs-bitrate-graph": "^0.2.0",
     "videojs-contrib-hls": "^5.14.1"
   },
   "devDependencies": {

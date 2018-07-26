@@ -15,7 +15,8 @@ export default class App extends React.Component {
       message: 'block',
       debugVisibility: 'none',
       display: remote.screen.getAllDisplays()
-        .find(display => display.bounds.x !== 0 || display.bounds.y !== 0),
+        .find(display => display.bounds.x !== 0 || display.bounds.y !== 0) 
+        || remote.screen.getAllDisplays()[0],
       bitrate: 0,
       stream: 'default',
       meta: '',

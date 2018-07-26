@@ -1,5 +1,6 @@
 import React from 'react'
 import 'videojs-contrib-hls'
+import 'videojs-bitrate-graph'
 import videojs from 'video.js'
 import config from './config'
 
@@ -8,7 +9,7 @@ export default class VideoPlayer extends React.Component {
         const videoJsOptions = {
             autoplay: true,
             controls: true,
-            fullscreenToggle: false,
+            fullscreenToggle: true,
             width: this.props.display.bounds.width,
             sources: [{
                 src: config.defaultStream.file,
@@ -18,6 +19,7 @@ export default class VideoPlayer extends React.Component {
         this.player = videojs(this.videoNode, videoJsOptions, function onPlayready() {
             console.log('onPlayerReady', this)
         })
+        // this.player.bitrateGraph()
     }
 
     componentWillUnmount() {
