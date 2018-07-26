@@ -1,5 +1,6 @@
 import { fromEvent } from 'rxjs'
 import { remote } from 'electron'
+import videojs from 'video.js'
 import _ from 'lodash'
 import React from 'react'
 import { StyleSheet, css } from './aphroditeExtension'
@@ -34,7 +35,7 @@ export default class InfoPanel extends React.Component {
                 if (event.key === 'd') this.props.handleChange('debugVisibility', this.props.debugVisibility === 'none' ? 'block' : 'none')
                 if (event.key === 'b') {
                     this.props.handleChange('stream', this.props.stream !== 'default' ? 'default' : 'backup')
-                    jwplayer().load([this.props.streams[this.props.stream][0]])
+                    videojs().playlist([{ sources: [this.props.streams[this.props.stream][0]] }])
                 }
                 if (_.range(49, 57, 1).includes(event.keyCode)) {
                     try {
