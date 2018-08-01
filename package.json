@@ -1,6 +1,6 @@
 {
-  "name": "ha-electron-app",
-  "version": "1.0.0",
+  "name": "Harvest Player App",
+  "version": "0.0.5",
   "description": "Harvest Video Player built in electron",
   "main": "src/index.js",
   "scripts": {
@@ -35,10 +35,15 @@
         ]
       },
       "electronPackagerConfig": {
+        "platform": "all",
         "packageManager": "npm"
       },
+      "electronInstallerDMG": {
+        "icon": "https://storage.googleapis.com/harvest-online/common/logo.ico"
+      },
       "electronWinstallerConfig": {
-        "name": "HarvestVideoPlayer"
+        "name": "HarvestVideoPlayer",
+        "iconUrl": "https://storage.googleapis.com/harvest-online/common/logo.ico"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -77,6 +82,7 @@
     "babel-preset-react": "^6.24.1",
     "dotenv": "^6.0.0",
     "electron-forge": "^5.2.2",
+    "electron-installer-dmg": "^2.0.0",
     "electron-prebuilt-compile": "2.0.4",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
