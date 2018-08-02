@@ -16,33 +16,37 @@ export default class InfoPanel extends React.Component {
     }
     componentDidMount() {
         const userInput = fromEvent(document, 'keydown')
+        const player = () => videojs.players[Object.keys(videojs.players)[0]]
 
         userInput.subscribe(
             (event) => {
                 if (event.keyCode === 191) this.setVisibility('dialogVisibility', this.state.dialogVisibility === 'none' ? 'block' : 'none')
-                if (event.code === 'Space') jwplayer().getState() !== 'playing' ? jwplayer().play() : jwplayer().pause()
-                if (event.key === 'r') jwplayer().load(jwplayer().getPlaylist())
-                if (event.key === 'c') jwplayer().setControls(!jwplayer().getControls())
+                if (event.code === 'Space') player().paused() ? player().play() : player().pause()
+                if (event.key === 'r') player().src([player().src()])
+                if (event.key === 'c') player().controls() ? player().controls(false) : player().controls(true)
                 if (event.key === 'm') {
-                    document.getElementsByClassName('jw-media')[0].style.cursor = "inherit"
                     document.body.style.cursor !== 'none' ? document.body.style.cursor = 'none' : document.body.style.cursor = 'default'
                 }
                 if (event.key === 'l') {
-                    jwplayer().seek(-jwplayer().getDuration())
-                    console.log(-jwplayer().getDuration())
+                    player().currentTime(-player().druation())
+                    console.log(player().currentTime(-player().druation()))
                 }
-                if (event.key === 's') jwplayer().seek(0)
-                if (event.key === 'd') this.props.handleChange('debugVisibility', this.props.debugVisibility === 'none' ? 'block' : 'none')
+                if (event.key === 's') player().currentTime(0)
+                if (event.key === 'd') {
+                    this.props.handleChange('debugVisibility', this.props.debugVisibility === 'none' ? 'block' : 'none')
+                }
                 if (event.key === 'b') {
                     this.props.handleChange('stream', this.props.stream !== 'default' ? 'default' : 'backup')
-                    videojs().playlist([{ sources: [this.props.streams[this.props.stream][0]] }])
+                    player().src([this.props.streams[this.props.stream][0]])
                 }
                 if (_.range(49, 57, 1).includes(event.keyCode)) {
+                    const display = displays[Number(event.key) - 1]
                     try {
                         win[0].setContentBounds(
-                            displays[Number(event.key) - 1].bounds
+                            display.bounds
                         )
-                        this.handleChange('display', displays[Number(event.key) - 1])
+                        this.props.handleChange('display', display)
+                        player().dimensions(display.bounds.width,display.bounds.height)
                     } catch (err) {
                         console.error('monitor ' + event.key + ' doesn\'t exist. ' + err)
                     }
