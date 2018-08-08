@@ -1,3 +1,6 @@
 node_modules
 .vscode
 out
+.env
+ha_app.code-workspace
+.eslintrc
