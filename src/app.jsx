@@ -12,13 +12,14 @@ export default class App extends React.Component {
     this.state = {
       cursor: 'default',
       message: 'block',
+      droppedFrames: 0,
+      player: false,
+      totalFrames: 0,
       debugVisibility: 'none',
       display: remote.screen.getAllDisplays()
         .find(display => display.bounds.x !== 0 || display.bounds.y !== 0)
         || remote.screen.getAllDisplays()[0],
-      bitrate: 0,
       stream: 'default',
-      meta: '',
       streams: {
         default: [
           config.defaultStream
@@ -51,30 +52,36 @@ export default class App extends React.Component {
     }
   }
   render() {
-  const styles = StyleSheet.create({
-    messageBox: {
-      display: this.state.message,
-      width: "auto",
-      bottom: 0,
-      position: "absolute",
-      right: "16px",
-      color: "white",
-      fontSize: "54px",
-      zIndex: 100
-    }
-  })
-    return (
-      <div id="wrapper">
-        <InfoPanel
+    const styles = StyleSheet.create({
+      messageBox: {
+        display: this.state.message,
+        width: "auto",
+        bottom: 0,
+        position: "absolute",
+        right: "16px",
+        color: "white",
+        fontSize: "54px",
+        zIndex: 100
+      }
+    })
+    let panel;
+    if(this.state.player) {
+       panel =
+        (<InfoPanel
           debugVisibility={this.state.debugVisibility}
           handleChange={this.handleChange}
           stream={this.state.stream}
+          player={this.state.player}
           streams={this.state.streams}
-        />
+        />)
+    }
+    return (
+      <div id="wrapper">
+        {panel}
         <DebugPanel
-          bitrate={this.state.bitrate}
+          droppedFrames={this.state.droppedFrames}
           stream={this.state.stream}
-          meta={this.state.meta}
+          totalFrames={this.state.totalFrames}
           debugVisibility={this.state.debugVisibility}
         />
         <div id="message" className={css(styles.messageBox)} />

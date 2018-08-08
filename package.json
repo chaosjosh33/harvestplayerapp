@@ -66,6 +66,7 @@
     "video.js": "^7.0.5",
     "videojs-bitrate-graph": "^0.2.0",
     "videojs-contrib-hls": "^5.14.1",
+    "videojs-contrib-quality-levels": "^2.0.5",
     "videojs-playlist": "^4.2.2"
   },
   "devDependencies": {

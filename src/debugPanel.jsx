@@ -27,9 +27,9 @@ export default class DebugPanel extends React.Component {
             <div className={css(styles.debug)}>
                 <h3>Debug Stats</h3>
                 <ul>
-                    <li>Bitrate: {this.props.bitrate}</li>
                     <li>Stream: {this.props.stream}</li>
-                    <li>Meta: {this.props.meta}</li>
+                    <li>Dropped Frames: {this.props.droppedFrames}</li>
+                    <li>Total Frames: {this.props.totalFrames}</li>
                 </ul>
             </div>
         )

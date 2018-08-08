@@ -7,22 +7,30 @@
 <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
-<script src="https://content.jwplatform.com/libraries/U7kzhyAF.js"></script>
 </head>
 <style>
-  .jw-media, .jw-logo, .jw-overlays, .jwplayer.jw-flag-controls-hidden .jw-media {
-    cursor: 'inherit!important';
-    pointer-events: "inherit!important"
+ .vjs-text-track-display div {
+    font-size: 1.4em !important;
+    width: auto !important;
+    height: auto !important;
+    text-align: left !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 10% !important;
+    writing-mode: horizontal-tb !important;
   }
 </style>
 <body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0" >
   <div id="App"></div>
 </body>
+<script type="text/javascript">
+const videojs = require('video.js')
+</script>
 <script type="text/jsx">
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
-
 const render = () => {
   const App = require('./app').default;
   ReactDOM.render(<AppContainer><App /></AppContainer>, document.getElementById('App'));

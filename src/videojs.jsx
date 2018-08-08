@@ -1,14 +1,14 @@
 import React from 'react'
 import videojs from 'video.js'
 import 'videojs-contrib-hls'
-import 'videojs-bitrate-graph'
-import 'videojs-playlist'
+import 'videojs-contrib-quality-levels'
 import config from './config'
 
 const fileType = 'application/x-mpegURL'
 export default class VideoPlayer extends React.Component {
     componentDidMount() {
         const videoJsOptions = {
+            app: this,
             autoplay: true,
             controls: false,
             width: this.props.display.bounds.width,
@@ -19,6 +19,7 @@ export default class VideoPlayer extends React.Component {
         }
         this.player = videojs(this.videoNode, videoJsOptions, function onPlayready() {
             console.log('onPlayerReady', this)
+            videoJsOptions.app.props.handleChange('player',true)
         })
 
         videojs.log.level('all')
@@ -53,13 +54,6 @@ export default class VideoPlayer extends React.Component {
                 if (stream.title === this.props.stream) this.player.src([stream])
             }
         })
-/*
-        jwplayer().setControls(false)
-        jwplayer().on('buffer', r => this.props.showMessage(r.newstate))
-        jwplayer().on('play', r => this.props.showMessage(r.viewable ? 'playing' : 'error'))
-        jwplayer().on('time', () =>
-            this.props.handleChange('bitrate', jwplayer().getVisualQuality().level.bitrate))
-        jwplayer().on('bufferChange', o => this.props.handleChange('meta', JSON.stringify(o))) */
     }
 
     shouldComponentUpdate() {

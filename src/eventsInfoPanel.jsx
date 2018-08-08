@@ -1,4 +1,4 @@
-import { fromEvent } from 'rxjs'
+import { fromEvent, BehaviorSubject } from 'rxjs'
 import { remote } from 'electron'
 import videojs from 'video.js'
 import _ from 'lodash'
@@ -17,7 +17,20 @@ export default class InfoPanel extends React.Component {
     componentDidMount() {
         const userInput = fromEvent(document, 'keydown')
         const player = () => videojs.players[Object.keys(videojs.players)[0]]
+        const debug = new BehaviorSubject(this.props.debugVisibility)
 
+        debug.subscribe((v) => {
+            if(player()) player().textTracks()[0].mode = v === "block" ? "showing" : "hidden"
+        })
+        const frames = new BehaviorSubject(player().getVideoPlaybackQuality())
+        frames.subscribe((value) => {
+            this.props.handleChange('droppedFrames', value.droppedVideoFrames)
+            this.props.handleChange('totalFrames', value.totalVideoFrames)
+        })
+        player().on('timeupdate', () => {
+            debug.next(this.props.debugVisibility)
+            frames.next(player().getVideoPlaybackQuality())
+        })
         userInput.subscribe(
             (event) => {
                 if (event.keyCode === 191) this.setVisibility('dialogVisibility', this.state.dialogVisibility === 'none' ? 'block' : 'none')
@@ -28,8 +41,8 @@ export default class InfoPanel extends React.Component {
                     document.body.style.cursor !== 'none' ? document.body.style.cursor = 'none' : document.body.style.cursor = 'default'
                 }
                 if (event.key === 'l') {
-                    player().currentTime(-player().druation())
-                    console.log(player().currentTime(-player().druation()))
+                    player().currentTime(-player().duration())
+                    console.log(player().currentTime(-player().duration()))
                 }
                 if (event.key === 's') player().currentTime(0)
                 if (event.key === 'd') {
@@ -38,6 +51,7 @@ export default class InfoPanel extends React.Component {
                 if (event.key === 'b') {
                     this.props.handleChange('stream', this.props.stream !== 'default' ? 'default' : 'backup')
                     player().src([this.props.streams[this.props.stream][0]])
+                    debug.next(this.props.debugVisibility)
                 }
                 if (_.range(49, 57, 1).includes(event.keyCode)) {
                     const display = displays[Number(event.key) - 1]
@@ -80,25 +94,25 @@ export default class InfoPanel extends React.Component {
             }
         })
         return(
-                <div className={css(styles.dialogWrapper)}>
+            <div className={css(styles.dialogWrapper)}>
                 <h1 className={css(styles.title)}>Harvest Video Player</h1>
                 <p className={css(styles.appDescription)}>
                 This application is designed for full-screen playback.
-                  To control the application use the keyboard shortcuts below:</p>
+                    To control the application use the keyboard shortcuts below:</p>
                 <ul className={css(styles.shortcuts)}>
-                        <li>?: Toggle shortcut help menu</li>
-                        <li>Esc: Close the video player application</li>
-                        <li>R: Restart the player</li>
-                        <li>1-9: Move video window between available screens</li>
-                        <li>C: Toggle on-screen control bar</li>
-                        <li>Space: Play/pause video stream</li>
-                        <li>M: Toggle mouse cursor visibility</li>
-                        <li>L: Seek to current/live video</li>
-                        <li>S: Seek to start of stream</li>
-                        <li>D: Toggle application debugging/video statistics</li>
-                        <li>B: Switch between primary and backup feed</li>
-                    </ul>
-                </div>
+                    <li>?: Toggle shortcut help menu</li>
+                    <li>Esc: Close the video player application</li>
+                    <li>R: Restart the player</li>
+                    <li>1-9: Move video window between available screens</li>
+                    <li>C: Toggle on-screen control bar</li>
+                    <li>Space: Play/pause video stream</li>
+                    <li>M: Toggle mouse cursor visibility</li>
+                    <li>L: Seek to current/live video</li>
+                    <li>S: Seek to start of stream</li>
+                    <li>D: Toggle application debugging/video statistics</li>
+                    <li>B: Switch between primary and backup feed</li>
+                </ul>
+            </div>
         )
     }
 }
