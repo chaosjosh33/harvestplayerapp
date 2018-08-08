@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://harvestonline.beanstalkapp.com/harvest"
+    "url": "https://harvestonline.git.beanstalkapp.com/harvest-player-electron-app.git"
   },
   "keywords": [
     "Electron",
