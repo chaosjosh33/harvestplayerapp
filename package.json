@@ -1,5 +1,5 @@
 {
-  "name": "Harvest Player App",
+  "name": "harvest-player-app",
   "version": "0.0.5",
   "description": "Harvest Video Player built in electron",
   "main": "src/index.js",
