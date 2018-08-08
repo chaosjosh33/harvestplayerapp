@@ -1,7 +1,7 @@
 {
   "name": "ha-electron-app",
   "version": "1.0.0",
-  "description": "Ha app built in electron",
+  "description": "Harvest Video Player built in electron",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -18,7 +18,7 @@
   },
   "keywords": [
     "Electron",
-    "ha_app"
+    "Harvest Video Player"
   ],
   "config": {
     "forge": {
@@ -27,7 +27,7 @@
           "squirrel"
         ],
         "darwin": [
-          "zip"
+          "dmg"
         ],
         "linux": [
           "deb",
@@ -38,7 +38,7 @@
         "packageManager": "npm"
       },
       "electronWinstallerConfig": {
-        "name": "ha_app"
+        "name": "HarvestVideoPlayer"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -48,7 +48,7 @@
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "ha_app"
+        "name": "HarvestVideoPlayer"
       }
     }
   },
@@ -57,6 +57,7 @@
     "electron-compile": "^6.4.3",
     "electron-devtools-installer": "^2.2.4",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-winstaller": "^2.6.4",
     "glamor": "^2.20.40",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
