@@ -83,7 +83,7 @@
     "dotenv": "^6.0.0",
     "electron-forge": "^5.2.2",
     "electron-installer-dmg": "^2.0.0",
-    "electron-prebuilt-compile": "2.0.4",
+    "electron-prebuilt-compile": "^2.0.6",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.13.0",
