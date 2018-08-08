@@ -3,7 +3,7 @@ import { remote } from 'electron'
 import { StyleSheet, css } from './aphroditeExtension'
 import InfoPanel from './eventsInfoPanel'
 import DebugPanel from './debugPanel'
-// import config from './config'
+import config from './config'
 import VideoPlayer from './videojs';
 
 export default class App extends React.Component {
