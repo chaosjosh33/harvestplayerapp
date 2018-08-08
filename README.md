@@ -2,7 +2,7 @@
 
 This is the Harvest Player desktop app that replaces the legacy Adobe Air player app using Electron framework to build with web technologies.  
 
-This application incorporates the following technology: 
+This application incorporates the following web technology: 
 - NodeJS
 - VideoJS
 - ReactJS
@@ -21,6 +21,19 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 git clone git@harvestonline.git.beanstalkapp.com:/harvestonline/harvest-player-electron-app.git
 # Go into the repository
 cd harvest-player-electron-app
+```
+Create a `.env` file in project root and fill it with these env variables: 
+```
+DEFAULT_STREAM  = <M3U8 URL>
+BACKUP_STREAM   = <M3U8 URL>
+FIREBASE_KEY    = <FIREBASE API KEY>
+AUTH_DOMAIN     = <FIREBASE AUTH DOMAIN>
+PROJECT_ID      = <FIREBASE PROJECT ID>
+DATABASE_URL    = <FIREBASE DATABASE URL>
+STORAGE_BUCKET  = <FIREBASE STORAGE BUCKET>
+```
+Run node install and start
+```bash
 # Install dependencies
 npm install
 # Run the app
