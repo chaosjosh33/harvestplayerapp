@@ -18,7 +18,7 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 ```bash
 # Clone this repository
-git clone git@harvestonline.git.beanstalkapp.com:/harvestonline/harvest-player-electron-app.git
+git clone git@github.com:chaosjosh33/harvestplayerapp.git
 # Go into the repository
 cd harvest-player-electron-app
 ```
