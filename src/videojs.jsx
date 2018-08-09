@@ -2,7 +2,7 @@ import React from 'react'
 import videojs from 'video.js'
 import 'videojs-contrib-hls'
 import 'videojs-contrib-quality-levels'
-import config from './config'
+import { DefaultStream, BackupStream, GA, Firebase } from './config'
 
 const fileType = 'application/x-mpegURL'
 export default class VideoPlayer extends React.Component {
@@ -13,7 +13,7 @@ export default class VideoPlayer extends React.Component {
             controls: false,
             width: this.props.display.bounds.width,
             sources: [{
-                src: config.defaultStream.file,
+                src: DefaultStream.file,
                 type: fileType
             }]
         }
@@ -23,20 +23,20 @@ export default class VideoPlayer extends React.Component {
         })
 
         videojs.log.level('all')
-        firebase.initializeApp(config.config)
+        firebase.initializeApp(Firebase)
 
         const defaultLoc = firebase.database().ref('/harvest_player_app/streamUrl')
 
         defaultLoc.once('value')
             .then((snapshot) => {
                 const defaultStream = {
-                    src: snapshot.val()[0].file || config.defaultStream.file,
-                    title: snapshot.val()[0].title || config.defaultStream.title,
+                    src: snapshot.val()[0].file || DefaultStream.file,
+                    title: snapshot.val()[0].title || DefaultStream.title,
                     type: fileType
                 }
                 const backupStream = {
-                    src: snapshot.val()[1].file || config.defaultStream.file,
-                    title: snapshot.val()[1].title || config.defaultStream.title,
+                    src: snapshot.val()[1].file || BackupStream.file,
+                    title: snapshot.val()[1].title || BackupStream.title,
                     type: fileType
                 }
                 this.player.src([defaultStream])
@@ -54,6 +54,8 @@ export default class VideoPlayer extends React.Component {
                 if (stream.title === this.props.stream) this.player.src([stream])
             }
         })
+        GA.event('videoJs', 'playerLoaded', { evLabel: 'churchApp' })
+            .then(response => console.log(response))
     }
 
     shouldComponentUpdate() {

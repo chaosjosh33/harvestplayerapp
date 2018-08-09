@@ -4,6 +4,7 @@ import videojs from 'video.js'
 import _ from 'lodash'
 import React from 'react'
 import { StyleSheet, css } from './aphroditeExtension'
+import { GA } from './config'
 
 const screen = remote.screen
 const win = remote.BrowserWindow.getAllWindows()
@@ -34,7 +35,12 @@ export default class InfoPanel extends React.Component {
         userInput.subscribe(
             (event) => {
                 if (event.keyCode === 191) this.setVisibility('dialogVisibility', this.state.dialogVisibility === 'none' ? 'block' : 'none')
-                if (event.code === 'Space') player().paused() ? player().play() : player().pause()
+                if (event.code === 'Space') {
+                    const playing = !player().paused()
+                    GA.event('videoJs', playing ? 'paused' : 'resumed', { evLabel: 'churchApp' })
+                        .then(response => console.log(response))
+                    playing ? player().pause() : player().play()
+                }
                 if (event.key === 'r') player().src([player().src()])
                 if (event.key === 'c') player().controls() ? player().controls(false) : player().controls(true)
                 if (event.key === 'm') {
