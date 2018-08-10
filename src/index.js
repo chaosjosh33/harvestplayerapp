@@ -12,7 +12,9 @@ if (isDevMode) enableLiveReload({ strategy: 'react-hmr' });
 
 const createWindow = async () => {
   const displays = screen.getAllDisplays();
-  const externalDisplay = displays.find(display => display.bounds.x !== 0 || display.bounds.y !== 0)
+  const externalDisplay = displays
+    .find(display => display.bounds.x !== 0 || display.bounds.y !== 0) ||
+    displays.find(display => display.bounds.x === 0 || display.bounds.y === 0)
   // Create the browser window.
   mainWindow = new BrowserWindow({
     frame: false,

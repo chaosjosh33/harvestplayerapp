@@ -18,5 +18,4 @@ const Firebase = {
     databaseURL: env.DATABASE_URL,
     storageBucket: env.STORAGE_BUCKET,
 }
-console.log(env.GA_TRACKING_ID)
 export { DefaultStream, BackupStream, GA, Firebase }

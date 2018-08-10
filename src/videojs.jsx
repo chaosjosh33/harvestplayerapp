@@ -12,6 +12,7 @@ export default class VideoPlayer extends React.Component {
             autoplay: true,
             controls: false,
             width: this.props.display.bounds.width,
+            height: this.props.display.bounds.height,
             sources: [{
                 src: DefaultStream.file,
                 type: fileType
