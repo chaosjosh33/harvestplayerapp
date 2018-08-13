@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
 import Analytics from 'electron-google-analytics'
+import { env } from './env'
 
-const env = dotenv.config().parsed
+// const env = dotenv.config().parsed
 const DefaultStream = {
     file: env.DEFAULT_STREAM,
     title: "default"

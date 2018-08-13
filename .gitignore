@@ -5,3 +5,4 @@ out
 ha_app.code-workspace
 .eslintrc
 out
+env.jsx

@@ -18,6 +18,7 @@ const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     frame: false,
+    titleBarStyle: 'hidden',
     fullscreen: true,
     alwaysOnTop: true,
     x: externalDisplay ? externalDisplay.bounds.x : 800,

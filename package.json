@@ -24,10 +24,10 @@
     "forge": {
       "make_targets": {
         "win32": [
-          "squirrel"
+          "zip"
         ],
         "darwin": [
-          "dmg"
+          "zip"
         ],
         "linux": [
           "deb",
@@ -36,10 +36,10 @@
       },
       "electronPackagerConfig": {
         "platform": "all",
+        "icon": "icon.icns",
         "packageManager": "npm"
       },
       "electronInstallerDMG": {
-        "icon": "https://storage.googleapis.com/harvest-online/common/logo.ico"
       },
       "electronWinstallerConfig": {
         "name": "HarvestVideoPlayer",
@@ -60,6 +60,7 @@
   "dependencies": {
     "aphrodite": "^2.2.2",
     "electron-compile": "^6.4.3",
+    "dotenv": "^6.0.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-google-analytics": "^0.1.0",
     "electron-squirrel-startup": "^1.0.0",
@@ -84,7 +85,7 @@
     "dotenv": "^6.0.0",
     "electron-forge": "^5.2.2",
     "electron-installer-dmg": "^2.0.0",
-    "electron-prebuilt-compile": "2.0.6",
+    "electron-prebuilt-compile": "2.0.7",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.13.0",
